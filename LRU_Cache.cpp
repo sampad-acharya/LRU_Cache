@@ -55,6 +55,15 @@ public:
         }
     }
 
+    ~LRUCache() {
+    for (auto it = key_dict.begin(); it != key_dict.end(); ) {
+        delete it->second;
+        it = key_dict.erase(it);
+    }
+    delete head;
+    delete tail;
+    }
+
 private:
     void put_node(Node<K, V> *node) {
         Node<K, V> *previous_end = tail->prev;
@@ -69,6 +78,7 @@ private:
         node_prev->next = node->next;
         node->next->prev = node_prev;
     }
+
 };
 
 int main() {
